@@ -10,14 +10,14 @@ permalink: /articles/
        data-bloomberg="{% if a.publication == 'Bloomberg Businessweek' %}yes{% else %}no{% endif %}"
        data-favorite="{% if a.favorite %}yes{% else %}no{% endif %}">
     <div class="article-cover">
-      <img src="{{ '/assets/covers/' | append: a.cover | relative_url }}" alt="" loading="lazy">
+      <img src="{{ '/assets/covers/' | append: a.cover | relative_url | uri_escape }}" alt="" loading="lazy">
     </div>
     <div class="article-info">
       <div>{{ a.date | date: "%B %Y" }}</div>
       <div><a class="article-title" href="{{ a.link }}" target="_blank" rel="noopener">{{ a.title }}</a></div>
       <div>{{ a.publication }}</div>
       {%- if a.pdf and a.pdf != "" %}
-      <div><a class="article-pdf" href="{{ '/assets/pdf/' | append: a.pdf | relative_url }}" target="_blank" rel="noopener">[ PDF ]</a></div>
+      <div><a class="article-pdf" href="{{ '/assets/pdf/' | append: a.pdf | relative_url | uri_escape }}" target="_blank" rel="noopener">[ PDF ]</a></div>
       {%- endif %}
     </div>
   </div>

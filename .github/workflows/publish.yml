@@ -1,0 +1,53 @@
+# Publishes the website every time something on the main branch changes.
+#   1. Check:   looks for mistakes in articles (scripts/check_site.py)
+#   2. Build:   turns the files into a website (Jekyll)
+#   3. Publish: puts it live
+# If step 1 finds a mistake, steps 2 and 3 don't run and the live site stays as it was.
+name: Publish website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check for mistakes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install pyyaml
+      - run: python scripts/check_site.py
+
+  build:
+    name: Build website
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
+      - uses: actions/jekyll-build-pages@v1
+      - uses: actions/upload-pages-artifact@v5
+
+  publish:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

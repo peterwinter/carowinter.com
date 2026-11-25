@@ -10,9 +10,9 @@ redirect_from: /home/
 {%- assign front = site.articles | where: "front_page", true -%}
 <div class="cover-grid" id="covers">
   {%- for a in front %}
-  {%- if a.pdf and a.pdf != "" -%}{%- capture href -%}{{ '/assets/pdf/' | append: a.pdf | relative_url }}{%- endcapture -%}{%- else -%}{%- assign href = a.link -%}{%- endif %}
+  {%- if a.pdf and a.pdf != "" -%}{%- capture href -%}{{ '/assets/pdf/' | append: a.pdf | relative_url | uri_escape }}{%- endcapture -%}{%- else -%}{%- assign href = a.link -%}{%- endif %}
   <a class="cover" href="{{ href }}" target="_blank" rel="noopener" title="{{ a.title | escape }}">
-    <img src="{{ '/assets/covers/' | append: a.cover | relative_url }}" alt="{{ a.title | escape }}">
+    <img src="{{ '/assets/covers/' | append: a.cover | relative_url | uri_escape }}" alt="{{ a.title | escape }}">
   </a>
   {%- endfor %}
 </div>
