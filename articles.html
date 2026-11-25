@@ -1,0 +1,46 @@
+---
+layout: default
+title: Articles
+permalink: /articles/
+---
+{%- assign articles = site.articles | sort: "date" | reverse -%}
+<div class="article-grid" id="articles">
+  {%- for a in articles %}
+  <div class="article-card"
+       data-bloomberg="{% if a.publication == 'Bloomberg Businessweek' %}yes{% else %}no{% endif %}"
+       data-favorite="{% if a.favorite %}yes{% else %}no{% endif %}">
+    <div class="article-cover">
+      <img src="{{ '/assets/covers/' | append: a.cover | relative_url }}" alt="" loading="lazy">
+    </div>
+    <div class="article-info">
+      <div>{{ a.date | date: "%B %Y" }}</div>
+      <div><a class="article-title" href="{{ a.link }}" target="_blank" rel="noopener">{{ a.title }}</a></div>
+      <div>{{ a.publication }}</div>
+      {%- if a.pdf and a.pdf != "" %}
+      <div><a class="article-pdf" href="{{ '/assets/pdf/' | append: a.pdf | relative_url }}" target="_blank" rel="noopener">[ PDF ]</a></div>
+      {%- endif %}
+    </div>
+  </div>
+  {%- endfor %}
+</div>
+<script>
+  // Filter by the part of the address after "#": #bloomberg, #other, #favorites
+  (function () {
+    var cards = document.querySelectorAll('#articles .article-card');
+    function filter() {
+      var f = location.hash.slice(1);
+      cards.forEach(function (c) {
+        var show = f === 'bloomberg' ? c.dataset.bloomberg === 'yes'
+                 : f === 'other'     ? c.dataset.bloomberg === 'no'
+                 : f === 'favorites' ? c.dataset.favorite === 'yes'
+                 : true;
+        c.hidden = !show;
+      });
+      var menu = document.querySelector('.nav-mobile');
+      if (menu) menu.open = false;
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener('hashchange', filter);
+    filter();
+  })();
+</script>

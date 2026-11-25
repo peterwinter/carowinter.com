@@ -1,0 +1,35 @@
+{%- capture articles_url -%}{{ '/articles/' | relative_url }}{%- endcapture -%}
+<header class="site-header">
+  <a class="logo" href="{{ '/' | relative_url }}">
+    <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="{{ site.title }}">
+  </a>
+
+  <nav class="nav-desktop">
+    <a href="{{ '/' | relative_url }}"{% if page.url == "/" %} class="active"{% endif %}>home</a>
+    <div class="dropdown">
+      <a href="{{ articles_url }}"{% if page.url == "/articles/" %} class="active"{% endif %}>articles
+        <svg class="icon-small" viewBox="0 0 24 24" aria-hidden="true"><path d="M7,10L12,15L17,10H7Z"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <a href="{{ articles_url }}#bloomberg">Bloomberg Businessweek</a>
+        <a href="{{ articles_url }}#other">The New York Times + More</a>
+        <a href="{{ articles_url }}#favorites">Some Favorites</a>
+      </div>
+    </div>
+    <a href="{{ '/about/' | relative_url }}"{% if page.url == "/about/" %} class="active"{% endif %}>about</a>
+  </nav>
+
+  <details class="nav-mobile">
+    <summary aria-label="Menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/></svg>
+    </summary>
+    <div class="nav-mobile-menu">
+      <a href="{{ '/' | relative_url }}">HOME</a>
+      <a href="{{ '/about/' | relative_url }}">ABOUT</a>
+      <a href="{{ articles_url }}">ARTICLES</a>
+      <a class="sub" href="{{ articles_url }}#bloomberg">Bloomberg Businessweek</a>
+      <a class="sub" href="{{ articles_url }}#other">The New York Times + More</a>
+      <a class="sub" href="{{ articles_url }}#favorites">Some Favorites</a>
+    </div>
+  </details>
+</header>

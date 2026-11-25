@@ -1,0 +1,21 @@
+# Site settings. Safe to edit the values on the right-hand side.
+title: Caroline Elke Winter
+email: caro@carowinter.com
+linkedin: https://www.linkedin.com/in/caroline-elke-winter-4675216/
+
+# How many random covers to show on the home page
+home_page_covers: 12
+
+# ---- Technical settings below; no need to change ----
+collections:
+  articles:
+    output: false
+
+plugins:
+  - jekyll-redirect-from
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

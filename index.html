@@ -1,0 +1,30 @@
+---
+layout: default
+redirect_from: /home/
+---
+{%- comment -%}
+  Home page: a random selection of covers from articles marked "front_page: yes".
+  All of them are listed below; a small script shuffles them and keeps
+  site.home_page_covers of them on each visit.
+{%- endcomment -%}
+{%- assign front = site.articles | where: "front_page", true -%}
+<div class="cover-grid" id="covers">
+  {%- for a in front %}
+  {%- if a.pdf and a.pdf != "" -%}{%- capture href -%}{{ '/assets/pdf/' | append: a.pdf | relative_url }}{%- endcapture -%}{%- else -%}{%- assign href = a.link -%}{%- endif %}
+  <a class="cover" href="{{ href }}" target="_blank" rel="noopener" title="{{ a.title | escape }}">
+    <img src="{{ '/assets/covers/' | append: a.cover | relative_url }}" alt="{{ a.title | escape }}">
+  </a>
+  {%- endfor %}
+</div>
+<script>
+  (function () {
+    var grid = document.getElementById('covers');
+    var items = Array.prototype.slice.call(grid.children);
+    for (var i = items.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = items[i]; items[i] = items[j]; items[j] = t;
+    }
+    grid.innerHTML = '';
+    items.slice(0, {{ site.home_page_covers }}).forEach(function (el) { grid.appendChild(el); });
+  })();
+</script>

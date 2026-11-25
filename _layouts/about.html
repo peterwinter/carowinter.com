@@ -1,0 +1,11 @@
+---
+layout: default
+---
+<div class="about">
+  <div class="about-photo">
+    <img src="{{ '/assets/images/' | append: page.photo | relative_url }}" alt="{{ site.title }}">
+  </div>
+  <div class="about-text">
+    {{ content }}
+  </div>
+</div>
