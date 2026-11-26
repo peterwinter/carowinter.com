@@ -136,7 +136,10 @@ img { display: block; max-width: 100%; }
 .article-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--gap);
+  /* Cards in a column touch, forming one continuous off-white strip (like the original) */
+  column-gap: var(--gap);
+  row-gap: 0;
+  margin-top: -12px;
 }
 .article-card {
   background: var(--bar);
